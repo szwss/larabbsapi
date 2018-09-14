@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Topic;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -11,9 +10,10 @@ class TopicsController extends Controller
 {
     public function __construct()
     {
-		$this->middleware('auth', ['except' => ['index', 'show']]);
-	}
-	
+        $this->middleware('auth', ['except' => ['index', 'show']]);
+    }
+
+
 	public function index()
 	{
 		$topics = Topic::with('user', 'category')->paginate(30);
