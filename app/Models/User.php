@@ -22,7 +22,7 @@ class User extends Authenticatable
         $this->laravelNotify($instance);
     }
     use HasRoles;
-
+    use Traits\ActiveUserHelper;
     /**
      * The attributes that are mass assignable.
      *
