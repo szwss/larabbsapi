@@ -64,4 +64,33 @@ class User extends Authenticatable
         $this->save();
         $this->unreadNotifications->markAsRead();
     }
+
+    /*
+     * 当我们给属性赋值时，如 $user->password = 'password'，该修改器将被自动调用：
+     * */
+    public function setPasswordAttribute($value)
+    {
+        // 如果值的长度等于 60，即认为是已经做过加密的情况
+        if (strlen($value) != 60) {
+
+            // 不等于 60，做密码加密处理
+            $value = bcrypt($value);
+        }
+
+        $this->attributes['password'] = $value;
+    }
+    /*
+     * 同时，我们也需要考虑到其他地方对 avatar 的赋值，用户修改资料时，我们为 avatar 的赋值就是全路径，因此同样的我们需要考虑两种状况：
+     * */
+    public function setAvatarAttribute($path)
+    {
+        // 如果不是 `http` 子串开头，那就是从后台上传的，需要补全 URL
+        if ( ! starts_with($path, 'http')) {
+
+            // 拼接完整的 URL
+            $path = config('app.url') . "/uploads/images/avatars/$path";
+        }
+
+        $this->attributes['avatar'] = $path;
+    }
 }
