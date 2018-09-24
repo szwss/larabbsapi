@@ -75,6 +75,11 @@ $api->version('v1', [
 
 
 
+
+
+
+
+
         // 需要 token 验证的接口
         $api->group(['middleware' => 'api.auth'], function($api) {
             // 当前登录用户信息
@@ -104,6 +109,10 @@ $api->version('v1', [
             // 删除回复
             $api->delete('topics/{topic}/replies/{reply}', 'RepliesController@destroy')
                 ->name('api.topics.replies.destroy');
+            // 通知列表
+            $api->get('user/notifications', 'NotificationsController@index')
+                ->name('api.user.notifications.index');
+
         });
     });
 
