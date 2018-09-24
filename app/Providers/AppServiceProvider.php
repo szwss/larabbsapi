@@ -32,5 +32,17 @@ class AppServiceProvider extends ServiceProvider
         if (app()->isLocal()) {
             $this->app->register(\VIACreative\SudoSu\ServiceProvider::class);
         }
+
+        /*
+         * 并不是我们想象中的 404 Not Found。因为路由模型绑定没有找到模型后会抛出
+         * \Illuminate\Database\Eloquent\ModelNotFoundException 异常，
+         * DingoApi 默认所有异常都会返回 500，DingoApi 提供了方法，让我们手动处理异常。
+         * */
+        \API::error(function (\Illuminate\Database\Eloquent\ModelNotFoundException $exception) {
+            abort(404);
+        });
+        \API::error(function (\Illuminate\Auth\Access\AuthorizationException $exception) {
+            abort(403, $exception->getMessage());
+        });
     }
 }
