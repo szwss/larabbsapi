@@ -168,7 +168,13 @@ return [
     */
 
     'auth' => [
-        'jwt' => 'Dingo\Api\Auth\Provider\JWT',
+//        'jwt' => 'Dingo\Api\Auth\Provider\JWT',
+
+        /*
+         * 将原来的 jwt 替换为 oauth，值为刚才创建的 Provider，
+         * 这样在 Controller 中我们使用 $this->user() 就能获取到令牌对应的用户模型了。
+         * */
+        'oauth' => \App\Providers\PassportDingoProvider::class,
     ],
 
     /*
