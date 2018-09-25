@@ -182,6 +182,8 @@ return [
 
         //
         App\Providers\EasySmsServiceProvider::class,
+        //激光推送
+        App\Providers\JpushServiceProvider::class,
     ],
 
     /*
